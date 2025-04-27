@@ -6,15 +6,15 @@ export const GameWorld: React.FC = () => {
     <div className="relative w-full h-full overflow-hidden pixelated">
       {/* Фон подвала */}
       <div 
-        className="absolute inset-0 bg-gray-900 pixelated"
+        className="absolute inset-0 bg-[#1c1c28] pixelated"
         style={{
           imageRendering: 'pixelated'
         }}
       >
         {/* Каменная текстура стен */}
         <div className="absolute inset-0">
-          <div className="grid grid-cols-20 grid-rows-15 h-full w-full">
-            {Array.from({ length: 300 }).map((_, i) => (
+          <div className="grid grid-cols-16 grid-rows-10 h-full w-full">
+            {Array.from({ length: 160 }).map((_, i) => (
               <div
                 key={i}
                 className="pixelated"
@@ -26,8 +26,8 @@ export const GameWorld: React.FC = () => {
                     '#1c1c28',
                   height: '100%',
                   width: '100%',
-                  borderRight: i % 20 === 19 ? '1px solid #33334d' : 'none',
-                  borderBottom: i % 15 === 14 ? '1px solid #33334d' : 'none'
+                  borderRight: i % 16 === 15 ? '1px solid #33334d' : 'none',
+                  borderBottom: i % 10 === 9 ? '1px solid #33334d' : 'none'
                 }}
               />
             ))}
@@ -36,16 +36,16 @@ export const GameWorld: React.FC = () => {
         
         {/* Пол подвала */}
         <div className="absolute inset-x-0 bottom-0 h-1/2 pixelated">
-          <div className="grid grid-cols-30 grid-rows-12 h-full w-full">
-            {Array.from({ length: 360 }).map((_, i) => (
+          <div className="grid grid-cols-20 grid-rows-8 h-full w-full">
+            {Array.from({ length: 160 }).map((_, i) => (
               <div
                 key={`floor-${i}`}
                 className="pixelated"
                 style={{
                   backgroundColor: 
-                    (i % 2 === 0 && Math.floor(i / 30) % 2 === 0) || 
-                    (i % 2 === 1 && Math.floor(i / 30) % 2 === 1) 
-                      ? '#332f4d' : '#2d2a44',
+                    (i % 2 === 0 && Math.floor(i / 20) % 2 === 0) || 
+                    (i % 2 === 1 && Math.floor(i / 20) % 2 === 1) 
+                      ? '#443f5d' : '#3d384f',
                   height: '100%',
                   width: '100%'
                 }}
@@ -55,19 +55,19 @@ export const GameWorld: React.FC = () => {
         </div>
         
         {/* Колонны */}
-        {Array.from({ length: 4 }).map((_, i) => (
+        {Array.from({ length: 2 }).map((_, i) => (
           <div 
             key={`column-${i}`}
-            className="absolute w-8 h-32 bg-gray-700 pixelated"
+            className="absolute w-6 h-24 bg-gray-700 pixelated"
             style={{
-              top: '100px',
-              left: `${150 + i * 180}px`,
+              top: '60px',
+              left: `${90 + i * 140}px`,
               backgroundImage: 'linear-gradient(to bottom, #3f3f5f, #2d2d45)',
               boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)'
             }}
           >
-            <div className="absolute top-0 left-0 right-0 h-4 bg-gray-600"></div>
-            <div className="absolute bottom-0 left-0 right-0 h-4 bg-gray-800"></div>
+            <div className="absolute top-0 left-0 right-0 h-3 bg-gray-600"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-3 bg-gray-800"></div>
           </div>
         ))}
         
@@ -75,28 +75,28 @@ export const GameWorld: React.FC = () => {
         {Array.from({ length: 2 }).map((_, i) => (
           <div 
             key={`torch-${i}`}
-            className="absolute w-4 h-10 pixelated"
+            className="absolute w-4 h-8 pixelated"
             style={{
-              top: '120px',
-              left: `${220 + i * 350}px`,
+              top: '70px',
+              left: `${120 + i * 80}px`,
             }}
           >
-            <div className="w-full h-6 bg-brown-800"></div>
-            <div className="w-6 h-6 -ml-1 -mt-1 bg-orange-500 animate-pulse rounded-full" style={{filter: 'blur(4px)'}}></div>
-            <div className="w-4 h-4 absolute top-0 left-0 bg-yellow-500 animate-pulse rounded-full" style={{filter: 'blur(2px)'}}></div>
+            <div className="w-full h-4 bg-[#654321]"></div>
+            <div className="w-5 h-5 -ml-1 -mt-1 bg-orange-500 animate-pulse rounded-full" style={{filter: 'blur(2px)'}}></div>
+            <div className="w-3 h-3 absolute top-0 left-0 bg-yellow-500 animate-pulse rounded-full" style={{filter: 'blur(1px)'}}></div>
           </div>
         ))}
         
         {/* Лужи на полу */}
-        {Array.from({ length: 5 }).map((_, i) => (
+        {Array.from({ length: 3 }).map((_, i) => (
           <div 
             key={`puddle-${i}`}
             className="absolute pixelated"
             style={{
-              width: `${20 + Math.random() * 40}px`,
-              height: `${10 + Math.random() * 20}px`,
-              bottom: `${50 + Math.random() * 100}px`,
-              left: `${100 + i * 120 + Math.random() * 60}px`,
+              width: `${15 + Math.random() * 20}px`,
+              height: `${8 + Math.random() * 12}px`,
+              bottom: `${30 + Math.random() * 50}px`,
+              left: `${60 + i * 70 + Math.random() * 20}px`,
               backgroundColor: 'rgba(68, 68, 102, 0.4)',
               borderRadius: '50%',
               transform: 'rotateX(60deg)'
@@ -104,34 +104,18 @@ export const GameWorld: React.FC = () => {
           ></div>
         ))}
         
-        {/* Трещины на стенах */}
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div 
-            key={`crack-${i}`}
-            className="absolute pixelated"
-            style={{
-              width: '2px',
-              height: `${10 + Math.random() * 30}px`,
-              top: `${50 + Math.random() * 200}px`,
-              left: `${50 + i * 90 + Math.random() * 40}px`,
-              backgroundColor: '#1a1a25',
-              transform: `rotate(${Math.random() * 60 - 30}deg)`
-            }}
-          ></div>
-        ))}
-        
         {/* Паутина в углах */}
-        <div className="absolute top-0 left-0 w-20 h-20" style={{
+        <div className="absolute top-0 left-0 w-16 h-16" style={{
           backgroundImage: 'radial-gradient(circle at top left, transparent 70%, rgba(255,255,255,0.1) 90%)'
         }}></div>
-        <div className="absolute top-0 right-0 w-20 h-20" style={{
+        <div className="absolute top-0 right-0 w-16 h-16" style={{
           backgroundImage: 'radial-gradient(circle at top right, transparent 70%, rgba(255,255,255,0.1) 90%)'
         }}></div>
         
-        {/* Тайные руны на стенах */}
-        <div className="absolute top-1/4 left-1/5 text-xs text-purple-900 opacity-20 pixelated">●︎</div>
-        <div className="absolute top-1/3 right-1/4 text-xs text-purple-900 opacity-20 pixelated">♒︎</div>
-        <div className="absolute bottom-1/3 left-1/3 text-xs text-purple-900 opacity-20 pixelated">♋︎</div>
+        {/* Указатель направления */}
+        <div className="absolute right-12 top-1/2 transform -translate-y-1/2 text-white pixelated text-sm">
+          → Выход →
+        </div>
       </div>
     </div>
   );

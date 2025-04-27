@@ -10,25 +10,23 @@ const Game = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [currentDialog, setCurrentDialog] = useState(0);
   const [showDialog, setShowDialog] = useState(true);
-  const [playerPosition, setPlayerPosition] = useState({ x: 400, y: 300 });
+  const [playerPosition, setPlayerPosition] = useState({ x: 160, y: 120 });
   const gameAreaRef = useRef<HTMLDivElement>(null);
 
   const introDialogs = [
-    "* Давным-давно, два народа правили Землей: ЛЮДИ и МОНСТРЫ.",
-    "* Однажды между ними разразилась война.",
-    "* После долгой битвы победили люди.",
-    "* Они запечатали монстров под горой мощным магическим барьером.",
-    "* Легенда гласит, что те, кто поднимаются на гору, никогда не возвращаются...",
-    "* Много лет спустя...",
-    "* Гора Эбот, 201X год",
-    "* Ты, человек, упал в подземелье и оказался в мире монстров.",
-    "* Теперь твоё путешествие начинается."
+    "* Добро пожаловать в JAILPIXEL.",
+    "* Ты находишься в заброшенном подземелье.",
+    "* Тебе предстоит найти выход из этого места.",
+    "* Будь осторожен, здесь много опасностей...",
+    "* Используй стрелки для передвижения.",
+    "* Нажми Z для взаимодействия с предметами.",
+    "* Удачи в твоём путешествии!"
   ];
 
   useEffect(() => {
     // Воспроизведение музыки при загрузке страницы
     const audio = new Audio("https://vgmsite.com/soundtracks/undertale/taqhiqlb/03%20Your%20Best%20Friend.mp3");
-    audio.volume = 0.5;
+    audio.volume = 0.4;
     audio.loop = true;
     
     if (gameStarted) {
@@ -52,7 +50,7 @@ const Game = () => {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (!gameStarted) return;
     
-    const speed = 10;
+    const speed = 5;
     const gameArea = gameAreaRef.current;
     if (!gameArea) return;
     
@@ -71,6 +69,11 @@ const Game = () => {
         break;
       case 'ArrowRight':
         newPosition.x = Math.min(newPosition.x + speed, bounds.width - 32);
+        break;
+      case 'z':
+      case 'Z':
+        // Логика взаимодействия
+        console.log("Взаимодействие");
         break;
     }
     
@@ -98,15 +101,20 @@ const Game = () => {
       
       <div 
         ref={gameAreaRef}
-        className="game-area w-full max-w-4xl h-[600px] mx-auto relative"
+        className="game-area w-full max-w-lg h-[320px] mx-auto relative pixelated border-4 border-gray-800 overflow-hidden"
+        style={{ transform: 'scale(1.5)' }}
       >
         {gameStarted ? (
-          <>
+          <div className="relative w-full h-full">
             <GameWorld />
             <Player x={playerPosition.x} y={playerPosition.y} />
-          </>
+            
+            <div className="absolute bottom-2 left-0 right-0 text-center text-white pixelated text-xs">
+              Используйте стрелки для передвижения, Z для взаимодействия
+            </div>
+          </div>
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="w-full h-full flex items-center justify-center bg-gray-900">
             {showDialog && (
               <DialogBox 
                 text={introDialogs[currentDialog]} 
