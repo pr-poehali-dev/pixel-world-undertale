@@ -3,55 +3,63 @@ import React, { useState, useEffect } from 'react';
 
 interface DialogBoxProps {
   text: string;
-  onNext: () => void;
+  onNext?: () => void;
+  speed?: number;
 }
 
-export const DialogBox: React.FC<DialogBoxProps> = ({ text, onNext }) => {
+export const DialogBox: React.FC<DialogBoxProps> = ({ 
+  text, 
+  onNext,
+  speed = 30 
+}) => {
   const [displayedText, setDisplayedText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
-  const [textIndex, setTextIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [typeSound] = useState(new Audio('https://vgmsite.com/soundtracks/undertale/gvyypyxy/01%20Once%20Upon%20a%20Time.mp3'));
 
   useEffect(() => {
-    setDisplayedText('');
-    setTextIndex(0);
-    setIsComplete(false);
-  }, [text]);
-
-  useEffect(() => {
-    if (textIndex < text.length) {
-      const timer = setTimeout(() => {
-        setDisplayedText(prev => prev + text[textIndex]);
-        setTextIndex(textIndex + 1);
-      }, 40);
+    typeSound.volume = 0.2;
+    
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+        
+        // Воспроизведение звука печатания
+        if (text[currentIndex] !== ' ' && text[currentIndex] !== '*') {
+          typeSound.currentTime = 0;
+          typeSound.play().catch(e => console.log("Звук заблокирован:", e));
+        }
+      }, speed);
       
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timeout);
     } else {
       setIsComplete(true);
     }
-  }, [textIndex, text]);
+  }, [currentIndex, text, speed, typeSound]);
 
   const handleClick = () => {
-    if (isComplete) {
+    if (isComplete && onNext) {
       onNext();
-    } else {
-      // Если текст печатается, показать весь текст сразу
+    } else if (!isComplete) {
+      // Если текст еще печатается, показываем весь текст сразу
       setDisplayedText(text);
-      setTextIndex(text.length);
+      setCurrentIndex(text.length);
       setIsComplete(true);
     }
   };
 
   return (
     <div 
-      className="dialog-box bg-black text-white p-6 w-[500px] h-[150px] mx-auto relative cursor-pointer"
+      className="dialog-box w-96 max-w-full p-4 bg-black border-4 border-white rounded pixelated relative cursor-pointer"
       onClick={handleClick}
     >
-      <div className="text-xl pixelated" style={{ fontFamily: 'Determination Mono, monospace' }}>
+      <div className="text-white font-pixelated text-xl leading-relaxed pixelated" style={{ fontFamily: 'Determination Mono, monospace' }}>
         {displayedText}
       </div>
       
       {isComplete && (
-        <div className="absolute bottom-4 right-6 animate-pulse">
+        <div className="absolute bottom-2 right-4 animate-bounce text-white">
           ▼
         </div>
       )}

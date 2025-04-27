@@ -1,7 +1,8 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ 
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -9,155 +10,122 @@
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
+ 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
-    /* Undertale colors */
-    --primary: 271 76% 53%; /* Purple */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 300 76% 72%; /* Pink */
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
+ 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 58 83% 75%; /* Yellow */
+ 
+    --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
+ 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
+ 
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 0%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 271 76% 53%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-    
-    /* Game specific */
-    --pixelated: 'Determination Mono', monospace;
   }
-
+ 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
+ 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
+ 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 271 76% 53%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 300 76% 72%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
+ 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 58 83% 75%;
+ 
+    --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
+ 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
+ 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
-
+ 
 @layer base {
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }
-  
-  /* Pixelated rendering */
-  .pixelated {
-    image-rendering: pixelated;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: crisp-edges;
-  }
-  
-  /* Undertale text animations */
-  .text-animation {
-    overflow: hidden;
-    border-right: .15em solid transparent;
-    white-space: nowrap;
-    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
-  }
-  
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-  }
-  
-  @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: white; }
-  }
-  
-  /* Custom font for Undertale */
-  @font-face {
-    font-family: 'Determination Mono';
-    src: url('https://fonts.cdnfonts.com/css/determination-mono-web') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
 }
 
-.game-container {
-  font-family: 'Determination Mono', monospace;
-  letter-spacing: 1px;
+/* Пиксельный шрифт */
+@font-face {
+  font-family: 'Determination Mono';
+  src: url('https://cdn.jsdelivr.net/gh/photonstorm/phaser3-examples@master/public/assets/fonts/retro/bitmap/determination_mono_12.png') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.dialog-box {
-  border: 4px solid white;
-  box-shadow: 0 0 0 4px #000;
-}
-
-.player {
-  width: 32px;
-  height: 32px;
-  background-color: red;
-  position: absolute;
-  transition: top 0.2s, left 0.2s;
-}
-
-.game-area {
-  position: relative;
-  overflow: hidden;
-  background-color: black;
-}
-
-.pixel-art {
+.pixelated {
   image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
+}
+
+.font-pixelated {
+  font-family: 'Determination Mono', monospace;
+}
+
+/* Анимация пульсации */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Пиксельный курсор */
+.game-container {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect width='4' height='4' x='6' y='6' fill='white'/%3E%3C/svg%3E") 8 8, auto;
+}
+
+/* Сетка и фон */
+.grid-cols-24 {
+  grid-template-columns: repeat(24, 1fr);
+}
+
+.grid-rows-18 {
+  grid-template-rows: repeat(18, 1fr);
+}
+
+.grid-cols-30 {
+  grid-template-columns: repeat(30, 1fr);
+}
+
+.grid-rows-12 {
+  grid-template-rows: repeat(12, 1fr);
 }
